@@ -1,0 +1,223 @@
+
+R version 2.15.0 (2012-03-30)
+Copyright (C) 2012 The R Foundation for Statistical Computing
+ISBN 3-900051-07-0
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> library(weightedKmeans)
+Loading required package: lattice
+Loading required package: latticeExtra
+Loading required package: RColorBrewer
+Loading required package: clv
+Loading required package: cluster
+Loading required package: class
+> 
+> csv <- "ewkm01.csv"
+> 
+> ds <- read.csv("ewkm01.csv")
+> 
+> set.seed(42)
+> km <- ewkm(ds, 10)
+> print(km)
+K-means clustering with 5 clusters of sizes 91, 28, 36, 65, 28
+
+Cluster means:
+    MinTemp  MaxTemp  Rainfall Evaporation  Sunshine WindGustSpeed WindSpeed9am
+1  2.263736 15.95055 0.3648352    2.591209  7.453846      31.74725     6.637363
+2  9.571429 18.25357 3.6928571    5.028571  6.942857      52.53571    20.464286
+3  6.680556 20.77778 1.2333333    5.511111 10.097222      49.11111    14.500000
+4 12.253846 28.78615 0.4123077    6.883077 10.607692      40.70769     6.815385
+5  9.325000 16.80714 4.7785714    3.735714  2.814286      40.42857    10.464286
+  WindSpeed3pm Humidity9am Humidity3pm Pressure9am Pressure3pm Cloud9am
+1     15.58242    76.75824    45.83516    1024.531    1021.507 3.494505
+2     26.21429    70.50000    51.64286    1012.736    1011.496 5.000000
+3     25.80556    59.30556    33.50000    1018.347    1015.625 2.638889
+4     14.69231    65.64615    30.52308    1018.662    1015.166 2.553846
+5     15.78571    84.42857    73.92857    1015.543    1013.693 7.000000
+  Cloud3pm   Temp9am  Temp3pm
+1 3.692308  7.848352 14.92088
+2 3.928571 13.096429 16.64643
+3 3.416667 12.900000 19.65556
+4 2.953846 17.790769 27.46308
+5 6.928571 12.182143 14.83929
+
+Clustering vector:
+  [1] 3 3 5 1 5 1 1 1 1 5 4 5 3 4 4 1 3 3 1 1 1 3 2 3 5 1 4 1 3 1 4 1 4 2 5 4 1
+ [38] 1 4 5 4 1 4 5 1 1 1 1 4 4 4 1 3 4 1 3 5 4 1 3 5 1 1 4 2 3 3 4 1 2 4 5 1 4
+ [75] 1 3 1 5 3 1 1 1 4 4 1 4 1 1 1 1 3 5 4 4 2 3 1 1 1 4 1 4 1 1 1 5 1 1 3 4 4
+[112] 4 4 3 2 4 2 1 1 1 5 1 1 4 1 1 1 1 4 5 4 2 2 1 1 2 4 5 1 3 1 4 2 3 2 4 4 4
+[149] 1 2 4 4 3 2 1 1 5 4 1 2 5 3 1 1 3 3 4 4 4 3 1 4 3 1 1 4 3 5 1 1 1 1 2 2 4
+[186] 5 5 2 1 1 1 4 1 2 4 2 4 5 3 2 3 1 1 1 2 2 1 1 4 4 3 5 4 1 4 2 1 4 3 2 1 1
+[223] 2 1 5 1 3 2 3 4 1 4 4 1 3 5 4 1 4 4 3 4 4 5 5 4 2 1
+
+Within cluster sum of squares by cluster:
+ [1] 42491.08 15603.73 23199.40 31792.25 21882.76     0.00     0.00     0.00
+ [9]     0.00     0.00
+ (between_SS / total_SS =  46.0 %)
+
+Available components:
+
+ [1] "cluster"          "centers"          "totss"            "withinss"        
+ [5] "tot.withinss"     "betweenss"        "size"             "iterations"      
+ [9] "total.iterations" "restarts"         "weights"         
+> cat(km$iterations, km$restarts, km$total.iterations, "\n")
+100 10 145 
+> 
+> set.seed(42)
+> km <- ewkm(ds, 10, maxrestart=50)
+> print(km)
+K-means clustering with 2 clusters of sizes 88, 160
+
+Cluster means:
+   MinTemp  MaxTemp Rainfall Evaporation Sunshine WindGustSpeed WindSpeed9am
+1 7.297727 16.94432 2.634091    3.752273 5.445455      42.60227     12.60227
+2 7.061875 22.25750 0.686250    4.980000 9.533125      38.48125      8.28750
+  WindSpeed3pm Humidity9am Humidity3pm Pressure9am Pressure3pm Cloud9am
+1     19.94318    78.32955    59.96591    1017.149    1015.022 5.443182
+2     17.01875    67.70000    35.00000    1021.178    1018.055 2.725000
+  Cloud3pm  Temp9am  Temp3pm
+1 5.261364 11.08182 15.36818
+2 3.075000 12.92250 21.12313
+
+Clustering vector:
+  [1] 2 2 1 2 1 1 2 1 1 1 2 1 2 2 2 2 2 2 2 2 2 2 1 2 1 1 2 2 2 1 2 2 2 1 1 1 2
+ [38] 2 2 1 2 2 2 1 1 2 2 2 2 2 2 1 2 2 2 2 1 2 2 2 1 1 1 2 1 2 2 2 2 1 2 1 2 2
+ [75] 2 2 2 1 2 2 2 2 2 2 1 2 2 2 2 1 2 1 2 2 1 2 1 2 2 2 2 2 2 2 1 1 2 2 2 2 2
+[112] 2 2 2 1 2 1 2 2 2 1 1 2 2 2 1 2 2 2 1 2 1 1 2 2 1 2 1 1 2 2 2 2 2 1 2 2 2
+[149] 2 1 2 2 2 1 1 1 1 2 2 1 1 2 2 1 1 2 2 1 2 2 2 2 1 2 2 2 2 1 2 2 2 1 1 1 2
+[186] 1 1 1 2 2 1 2 2 1 2 1 2 1 2 1 2 2 1 2 1 1 2 2 2 2 2 1 2 2 2 1 1 2 2 1 2 1
+[223] 1 1 1 1 2 1 2 2 1 2 2 1 2 1 2 2 2 2 2 2 2 1 1 2 1 1
+
+Within cluster sum of squares by cluster:
+ [1]  81334.34 117080.82      0.00      0.00      0.00      0.00      0.00
+ [8]      0.00      0.00      0.00
+ (between_SS / total_SS =  20.6 %)
+
+Available components:
+
+ [1] "cluster"          "centers"          "totss"            "withinss"        
+ [5] "tot.withinss"     "betweenss"        "size"             "iterations"      
+ [9] "total.iterations" "restarts"         "weights"         
+> cat(km$iterations, km$restarts, km$total.iterations, "\n")
+100 50 319 
+> 
+> set.seed(42)
+> km <- ewkm(ds, 10, maxrestart=-1)
+> print(km)
+K-means clustering with 10 clusters of sizes 40, 14, 14, 41, 20, 21, 37, 21, 19, 21
+
+Cluster means:
+     MinTemp  MaxTemp   Rainfall Evaporation  Sunshine WindGustSpeed
+1   1.132500 16.07250 0.47000000    2.590000  8.017500      30.72500
+2   2.971429 20.25000 0.00000000    4.742857 10.378571      43.21429
+3   9.350000 17.53571 8.20000000    4.214286  7.007143      60.78571
+4   6.221951 19.31463 0.47804878    3.863415  8.919512      34.63415
+5  -0.230000 11.82500 0.19000000    1.810000  6.605000      39.80000
+6   9.128571 21.10000 1.43809524    6.028571  9.600000      54.38095
+7  12.383784 29.08108 0.62162162    6.562162 10.445946      37.02703
+8  14.090476 21.13810 3.27619048    6.066667  3.219048      42.00000
+9  12.852632 29.98421 0.07368421    8.389474 11.284211      54.31579
+10  5.419048 15.20476 2.91428571    2.247619  3.452381      27.57143
+   WindSpeed9am WindSpeed3pm Humidity9am Humidity3pm Pressure9am Pressure3pm
+1      5.200000     14.90000    78.87500    41.45000    1023.630    1020.475
+2      7.500000     23.50000    61.35714    27.64286    1021.229    1017.371
+3     23.214286     25.28571    71.50000    57.35714    1009.121    1008.314
+4     10.317073     15.68293    67.48780    40.48780    1023.320    1020.468
+5      8.050000     21.55000    79.55000    57.15000    1024.925    1022.480
+6     15.904762     23.90476    63.23810    41.38095    1016.476    1014.048
+7      5.756757     13.29730    70.32432    30.27027    1018.451    1014.824
+8     12.857143     18.23810    78.47619    67.14286    1013.500    1011.900
+9     12.789474     24.94737    51.05263    22.42105    1015.005    1011.942
+10     7.285714     13.04762    85.90476    66.71429    1022.648    1020.143
+   Cloud9am Cloud3pm   Temp9am  Temp3pm
+1  3.050000 3.025000  6.865000 15.16000
+2  2.285714 2.571429 10.578571 19.04286
+3  4.928571 4.000000 12.835714 15.69286
+4  3.121951 3.487805 11.836585 18.20732
+5  3.750000 4.450000  4.900000 10.57000
+6  3.904762 3.904762 13.323810 19.54762
+7  2.702703 3.324324 17.572973 27.87568
+8  7.047619 6.476190 16.738095 19.00952
+9  1.315789 1.684211 20.226316 28.86316
+10 6.380952 6.523810  9.109524 13.90476
+
+Clustering vector:
+  [1]  2  2  8  4 10  4  1 10 10 10  7 10  2  9  2  4  6  4  4  1  1  4  6  9  8
+ [26] 10  7  5  6  5  7  1  7  3  3  6  4  1  7 10  7  4  4  8  5  1  5  1  4  4
+ [51]  7  5  2  9  1  3  3  4  1  2 10 10  5  7  8  2  4  9  1  8  7 10  4  6  4
+ [76]  7  4  8  6  1  1  4  7  6 10  7  1  4  1  5  6  8  7  7  4  6  5  1  1  7
+[101]  5  9 10  1  5  3  1  1  9  9  7  9  9  9  3  7  4  1  4  1  8 10  1  2  1
+[126]  1  4  1  9 10  7  4  8  1  1  3  7  8  1  2  1  7  3  6  8  9  6  2  1  3
+[151]  7  7  4  6  5  5  8  4  4  6  8  2  4  5  6  6  4  4  4  9  4  7  6  4  4
+[176]  7  4 10  1  5  5 10  8  8  7 10 10  6  1  1  1  7  1  3  7  3  9  5  4  6
+[201]  6  1  8  1  3  3  1  4  7  7  9  8  9  4  7  8  5  7  9  4  4 10  8  5  8
+[226] 10  2  3  2  7  1  7  6  4  2  5  7  1  7  9  6  7  7 10  8  9  4  5
+
+Within cluster sum of squares by cluster:
+ [1] 12714.696  4721.928 10806.090 16006.838  8016.697 12139.569 10005.607
+ [8] 11878.113 10925.609 10928.650
+ (between_SS / total_SS =  56.7 %)
+
+Available components:
+
+ [1] "cluster"          "centers"          "totss"            "withinss"        
+ [5] "tot.withinss"     "betweenss"        "size"             "iterations"      
+ [9] "total.iterations" "restarts"         "weights"         
+> cat(km$iterations, km$restarts, km$total.iterations, "\n")
+100 497 2615 
+> 
+> set.seed(42)
+> km <- ewkm(ds, 10, maxiter=1000, maxrestart=0)
+> print(km)
+K-means clustering with 1 clusters of sizes 248
+
+Cluster means:
+  MinTemp MaxTemp Rainfall Evaporation Sunshine WindGustSpeed WindSpeed9am
+1  1772.1  5052.3    341.6        1127   2004.5          9906         2435
+  WindSpeed3pm Humidity9am Humidity3pm Pressure9am Pressure3pm Cloud9am
+1         4478       17725       10877    252897.6    252210.7      915
+  Cloud3pm Temp9am Temp3pm
+1      955  3042.8  4732.1
+
+Clustering vector:
+  [1] 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10
+ [26] 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10
+ [51] 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10
+ [76] 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10
+[101] 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10
+[126] 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10
+[151] 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10
+[176] 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10
+[201] 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10
+[226] 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10
+
+Within cluster sum of squares by cluster:
+ [1] 0.000000e+00 0.000000e+00 0.000000e+00 0.000000e+00 0.000000e+00
+ [6] 0.000000e+00 0.000000e+00 0.000000e+00 0.000000e+00 3.153563e+13
+ (between_SS / total_SS = -12625006483.2 %)
+
+Available components:
+
+ [1] "cluster"          "centers"          "totss"            "withinss"        
+ [5] "tot.withinss"     "betweenss"        "size"             "iterations"      
+ [9] "total.iterations" "restarts"         "weights"         
+> cat(km$iterations, km$restarts, km$total.iterations, "\n")
+1000 0 1000 
+> 
+> proc.time()
+   user  system elapsed 
+  1.084   0.028   1.112 

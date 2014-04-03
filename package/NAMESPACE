@@ -1,0 +1,7 @@
+useDynLib("weightedKmeans")
+import("lattice")
+import("clv")
+export("ewkm")
+export("fgkm")
+S3method(plot, ewkm)
+S3method(levelplot, ewkm)
